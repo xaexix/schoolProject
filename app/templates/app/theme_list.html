@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for theme in theme_list %}
+    <a href="{{ theme.get_absolute_url }}">{{ theme.name }}</a> <br>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="navbar">
+        <a href='{% url 'theme-list' %}'>Home</a>
+    </div>
+    {{ theme.name }} <br>
+    {{ theme.solution_example }}
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Задача</th>
+            <th scope="col">Условие</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for exercise in exercises %}
+            <tr>
+                <td>Задача №{{ exercise.number }}</td>
+                <td>{{ exercise.description }}</td>
+                <td><a href="#" class="btn btn-primary" role="button" data-bs-toggle="button">Решить</a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock content %}
