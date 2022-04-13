@@ -39,3 +39,6 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.theme.name + ' Задача ' + str(self.number)
+
+    def get_absolute_url(self):
+        return f'/exercise-detail/{self.pk}'

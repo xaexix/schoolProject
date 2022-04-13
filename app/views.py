@@ -18,3 +18,7 @@ class ThemeDetailView(DetailView):
         exercises = Exercise.objects.filter(theme=kwargs.get('object'))
         context['exercises'] = exercises
         return context
+
+
+class ExerciseDetailView(DetailView):
+    model = Exercise

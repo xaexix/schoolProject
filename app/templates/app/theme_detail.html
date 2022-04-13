@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="navbar">
-        <a href='{% url 'theme-list' %}'>Home</a>
-    </div>
     {{ theme.name }} <br>
     {{ theme.solution_example }}
     <table class="table table-success table-striped">
@@ -20,7 +17,7 @@
             <tr>
                 <td>Задача №{{ exercise.number }}</td>
                 <td>{{ exercise.description }}</td>
-                <td><a href="#" class="btn btn-primary" role="button" data-bs-toggle="button">Решить</a></td>
+                <td><a href="{{ exercise.get_absolute_url }}" class="btn btn-primary" role="button">Решить</a></td>
             </tr>
         {% endfor %}
 
