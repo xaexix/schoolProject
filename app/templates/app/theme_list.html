@@ -2,8 +2,27 @@
 
 {% block content %}
 
-{% for theme in theme_list %}
-    <a href="{{ theme.get_absolute_url }}">{{ theme.name }}</a> <br>
-{% endfor %}
+        {{ theme.name }} <br>
+    {{ theme.solution_example }}
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Задача</th>
+            <th scope="col">Условие</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for theme in theme_list %}
+            <tr>
+                <td>{{ theme.name}}</td>
+                <td><a href="{{ theme.get_absolute_url }}">{{ theme.description }}</a></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
 
 {% endblock content %}

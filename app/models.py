@@ -6,6 +6,11 @@ class Theme(models.Model):
         verbose_name='Название',
         max_length=50,
     )
+    description = models.TextField(
+        verbose_name='Тема',
+        blank=True,
+        null=True,
+    )
     solution_example = models.TextField(
         verbose_name='Способы решения',
         blank=True,

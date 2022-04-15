@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ exercise.number }}
-    {{ exercise.description }}
-    {% if exercise.file %}
-        {{ exercise.file }}
-    {% endif %}
-    <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-primary" role="button">К задачам</a>
+    <p></p>
+    <h2>Задача {{ exercise.number }}&nbsp
+        <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a></h2>
+    <br>
+    <p>
+        {{ exercise.description }}
+        {% if exercise.file %}
+            {{ exercise.file }}
+        {% endif %}
+    </p>
 {% endblock content %}

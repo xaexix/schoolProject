@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ theme.name }} <br>
-    {{ theme.solution_example }}
     <table class="table table-success table-striped">
         <thead>
         <tr>
@@ -17,7 +15,7 @@
             <tr>
                 <td>Задача №{{ exercise.number }}</td>
                 <td>{{ exercise.description }}</td>
-                <td><a href="{{ exercise.get_absolute_url }}" class="btn btn-primary" role="button">Решить</a></td>
+                <td><a href="{{ exercise.get_absolute_url }}" class="btn btn-dark" role="button">Решить</a></td>
             </tr>
         {% endfor %}
 
