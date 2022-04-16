@@ -14,7 +14,9 @@
         {% for exercise in exercises %}
             <tr>
                 <td>Задача №{{ exercise.number }}</td>
-                <td>{{ exercise.description }}</td>
+                <td>
+                    {{ exercise.short_description|default:'' }}
+                </td>
                 <td><a href="{{ exercise.get_absolute_url }}" class="btn btn-dark" role="button">Решить</a></td>
             </tr>
         {% endfor %}

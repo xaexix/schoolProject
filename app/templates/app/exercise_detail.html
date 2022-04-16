@@ -6,9 +6,13 @@
         <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a></h2>
     <br>
     <p>
+    {% autoescape off %}
         {{ exercise.description }}
-        {% if exercise.file %}
-            {{ exercise.file }}
-        {% endif %}
+    {% endautoescape %}
+    </p>
+    <p>
+    {% if exercise.file %}
+        <a href="{{ exercise.file.url }}">Файл</a>
+    {% endif %}
     </p>
 {% endblock content %}
