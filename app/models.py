@@ -8,14 +8,6 @@ class Theme(models.Model):
     )
     description = models.TextField(
         verbose_name='Тема',
-        blank=True,
-        null=True,
-    )
-    # TODO: delete variable
-    solution_example = models.TextField(
-        verbose_name='Способы решения',
-        blank=True,
-        null=True,
     )
 
     def get_absolute_url(self):
@@ -35,7 +27,7 @@ class Exercise(models.Model):
         verbose_name='Тема',
     )
     number = models.PositiveSmallIntegerField(
-        verbose_name='Порядковый номер задачи',
+        verbose_name='Номер задачи',
     )
     short_description = models.CharField(
         verbose_name='Описание',
@@ -54,8 +46,6 @@ class Exercise(models.Model):
     correct_answer = models.CharField(
         verbose_name='Правильный ответ',
         max_length=250,
-        blank=True,
-        null=True,
     )
 
     def __str__(self):
@@ -63,3 +53,6 @@ class Exercise(models.Model):
 
     def get_absolute_url(self):
         return f'/exercise-detail/{self.pk}'
+
+    class Meta:
+        ordering = ['theme', 'number']
