@@ -2,17 +2,48 @@
 
 {% block content %}
     <p></p>
-    <h2>Задача {{ exercise.number }}&nbsp
-        <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a></h2>
+    <h2>Задача {{ exercise.number }}</h2>
     <br>
     <p>
-    {% autoescape off %}
-        {{ exercise.description }}
-    {% endautoescape %}
+        {% autoescape off %}
+            {{ exercise.description }}
+        {% endautoescape %}
     </p>
     <p>
-    {% if exercise.file %}
-        <a href="{{ exercise.file.url }}">Файл</a>
-    {% endif %}
+        {% if exercise.file %}
+            <a href="{{ exercise.file.url }}">Файл</a>
+        {% endif %}
     </p>
+    <form action=""  method="POST" id="form">
+        {% csrf_token %}
+        <div class="mb-3">
+            <div class="alert alert-success" hidden role="alert">
+                Ответ верный. Молодец!
+            </div>
+            <div class="alert alert-danger" hidden role="alert">
+                Ответ неверный. Попробуй еще раз.
+            </div>
+            <input name="answer" type="text" class="form-control" placeholder="Введите ответ" id="correctAnswer" aria-describedby="answerHelp">
+        </div>
+        <button type="submit" class="btn btn-success">Ответить</button>&nbsp
+        <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a>
+    </form>
 {% endblock content %}
+{% block script %}
+    <script>
+        $('#form').submit(function(){
+            data = $("#form").serialize();
+            data['exercise_id'] = {{ exercise.pk }}
+            $.post(
+                {% url "answer_check" %}, // адрес обработчика
+                data, // отправляемые данные
+
+                function(msg) { // получен ответ сервера
+                    alert(msg);
+                    return false;
+                }
+            );
+            return false;
+        });
+    </script>
+{% endblock script %}

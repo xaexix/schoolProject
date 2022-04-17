@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.views import View
 from django.views.generic import ListView, DetailView
 
 from app.models import (
@@ -23,3 +25,15 @@ class ThemeDetailView(DetailView):
 
 class ExerciseDetailView(DetailView):
     model = Exercise
+
+
+class AnswerCheckView(View):
+    def post(self, request, *args, **kwargs):
+        successful = False
+        pk = kwargs.get('pk', None)
+        answer = request.POST.get('answer', None)
+        exercise = self.model.objects.get(pk=pk)
+        correct_answer = exercise.correct_answer
+        if answer == correct_answer:
+            successful = True
+        return JsonResponse({"successful": successful})
