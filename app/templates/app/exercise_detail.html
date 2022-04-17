@@ -1,46 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p></p>
-    <h2>Задача {{ exercise.number }}</h2>
-    <br>
-    <p>
-        {% autoescape off %}
-            {{ exercise.description }}
-        {% endautoescape %}
-    </p>
-    <p>
+    <div class="container mt-5">
+        <div class="row">
+            <h2>Задача {{ exercise.number }}</h2>
+        </div>
+        <div class="row">
+            {% autoescape off %}
+                {{ exercise.description }}
+            {% endautoescape %}
+        </div>
         {% if exercise.file %}
             <a href="{{ exercise.file.url }}">Файл</a>
         {% endif %}
-    </p>
-    <form action=""  method="POST" id="form">
-        {% csrf_token %}
-        <div class="mb-3">
-            <div class="alert alert-success" hidden role="alert">
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action=""  method="POST" id="form">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input name="answer" type="text" class="form-control" placeholder="Введите ответ" id="correctAnswer" aria-describedby="answerHelp">
+                </div>
+                <div class="float-end">
+                    <button type="submit" class="btn btn-success">Ответить</button>&nbsp
+                    <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <div class="alert alert-success text-center" hidden role="alert" id="alert-success">
                 Ответ верный. Молодец!
             </div>
-            <div class="alert alert-danger" hidden role="alert">
+            <div class="alert alert-danger text-center" hidden role="alert" id="alert-danger">
                 Ответ неверный. Попробуй еще раз.
             </div>
-            <input name="answer" type="text" class="form-control" placeholder="Введите ответ" id="correctAnswer" aria-describedby="answerHelp">
         </div>
-        <button type="submit" class="btn btn-success">Ответить</button>&nbsp
-        <a href="{{ exercise.theme.get_absolute_url }}" class="btn btn-dark" role="button">К задачам</a>
-    </form>
+    </div>
 {% endblock content %}
 {% block script %}
     <script>
         $('#form').submit(function(){
-            data = $("#form").serialize();
-            data['exercise_id'] = {{ exercise.pk }}
             $.post(
                 {% url "answer_check" %}, // адрес обработчика
-                data, // отправляемые данные
-
+                $("#form").serialize() + '&exercise_id={{ exercise.pk }}', // отправляемые данные
                 function(msg) { // получен ответ сервера
-                    alert(msg);
-                    return false;
+                    if (typeof msg.successful !== 'undefined') {
+                        if (typeof msg.successful === 'boolean') {
+                            $('#alert-success').attr('hidden', !msg.successful);
+                            $('#alert-danger').attr('hidden', msg.successful);
+                        }
+                    }
                 }
             );
             return false;

@@ -27,13 +27,12 @@ class ExerciseDetailView(DetailView):
     model = Exercise
 
 
-class AnswerCheckView(View):
-    def post(self, request, *args, **kwargs):
-        successful = False
-        pk = kwargs.get('pk', None)
-        answer = request.POST.get('answer', None)
-        exercise = self.model.objects.get(pk=pk)
-        correct_answer = exercise.correct_answer
-        if answer == correct_answer:
-            successful = True
-        return JsonResponse({"successful": successful})
+def answer_check(request):
+    successful = False
+    exercise_id = request.POST.get('exercise_id', None)
+    answer = request.POST.get('answer', None)
+    exercise = Exercise.objects.get(pk=exercise_id)
+    correct_answer = exercise.correct_answer
+    if answer == correct_answer:
+        successful = True
+    return JsonResponse({"successful": successful})
